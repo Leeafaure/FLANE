@@ -1,0 +1,642 @@
+[
+  {
+    "id": "saint-germain-l-auxerrois",
+    "name": "Saint-Germain-l'Auxerrois",
+    "arrondissement": "1e",
+    "latitude": 48.86065013520993,
+    "longitude": 2.3349103292801994,
+    "kind": "official"
+  },
+  {
+    "id": "halles",
+    "name": "Halles",
+    "arrondissement": "1e",
+    "latitude": 48.86228910809422,
+    "longitude": 2.3448988583110166,
+    "kind": "official"
+  },
+  {
+    "id": "palais-royal",
+    "name": "Palais-Royal",
+    "arrondissement": "1e",
+    "latitude": 48.86465997810256,
+    "longitude": 2.3363089189653063,
+    "kind": "official"
+  },
+  {
+    "id": "place-vendome",
+    "name": "Place-Vendôme",
+    "arrondissement": "1e",
+    "latitude": 48.867018590627694,
+    "longitude": 2.328581664931248,
+    "kind": "official"
+  },
+  {
+    "id": "gaillon",
+    "name": "Gaillon",
+    "arrondissement": "2e",
+    "latitude": 48.869306638088744,
+    "longitude": 2.3334318076581146,
+    "kind": "official"
+  },
+  {
+    "id": "vivienne",
+    "name": "Vivienne",
+    "arrondissement": "2e",
+    "latitude": 48.86910019977125,
+    "longitude": 2.3394607437483312,
+    "kind": "official"
+  },
+  {
+    "id": "mail",
+    "name": "Mail",
+    "arrondissement": "2e",
+    "latitude": 48.868008337402706,
+    "longitude": 2.3446991274274604,
+    "kind": "official"
+  },
+  {
+    "id": "bonne-nouvelle",
+    "name": "Bonne-Nouvelle",
+    "arrondissement": "2e",
+    "latitude": 48.8671501183107,
+    "longitude": 2.3500801904088187,
+    "kind": "official"
+  },
+  {
+    "id": "arts-et-metiers",
+    "name": "Arts-et-Métiers",
+    "arrondissement": "3e",
+    "latitude": 48.86647028948414,
+    "longitude": 2.3570831310567835,
+    "kind": "official"
+  },
+  {
+    "id": "enfants-rouges",
+    "name": "Enfants-Rouges",
+    "arrondissement": "3e",
+    "latitude": 48.86388739200144,
+    "longitude": 2.363123300986952,
+    "kind": "official"
+  },
+  {
+    "id": "archives",
+    "name": "Archives",
+    "arrondissement": "3e",
+    "latitude": 48.859192412713874,
+    "longitude": 2.3632050573309638,
+    "kind": "official"
+  },
+  {
+    "id": "sainte-avoie",
+    "name": "Sainte-Avoie",
+    "arrondissement": "3e",
+    "latitude": 48.862557245043206,
+    "longitude": 2.354851518245669,
+    "kind": "official"
+  },
+  {
+    "id": "saint-merri",
+    "name": "Saint-Merri",
+    "arrondissement": "4e",
+    "latitude": 48.85852137232379,
+    "longitude": 2.3516669671389687,
+    "kind": "official"
+  },
+  {
+    "id": "saint-gervais",
+    "name": "Saint-Gervais",
+    "arrondissement": "4e",
+    "latitude": 48.85571865089275,
+    "longitude": 2.358162333852766,
+    "kind": "official"
+  },
+  {
+    "id": "arsenal",
+    "name": "Arsenal",
+    "arrondissement": "4e",
+    "latitude": 48.851585175021285,
+    "longitude": 2.3647679538731117,
+    "kind": "official"
+  },
+  {
+    "id": "notre-dame",
+    "name": "Notre-Dame",
+    "arrondissement": "4e",
+    "latitude": 48.852895586218004,
+    "longitude": 2.3527750121216795,
+    "kind": "official"
+  },
+  {
+    "id": "saint-victor",
+    "name": "Saint-Victor",
+    "arrondissement": "5e",
+    "latitude": 48.84766363545046,
+    "longitude": 2.354093153377686,
+    "kind": "official"
+  },
+  {
+    "id": "jardin-des-plantes",
+    "name": "Jardin-des-Plantes",
+    "arrondissement": "5e",
+    "latitude": 48.84194019337512,
+    "longitude": 2.356893889624744,
+    "kind": "official"
+  },
+  {
+    "id": "val-de-grace",
+    "name": "Val-de-Grace",
+    "arrondissement": "5e",
+    "latitude": 48.84168428795317,
+    "longitude": 2.3438609263160095,
+    "kind": "official"
+  },
+  {
+    "id": "sorbonne",
+    "name": "Sorbonne",
+    "arrondissement": "5e",
+    "latitude": 48.8490447659431,
+    "longitude": 2.3457466001872485,
+    "kind": "official"
+  },
+  {
+    "id": "monnaie",
+    "name": "Monnaie",
+    "arrondissement": "6e",
+    "latitude": 48.85438440363996,
+    "longitude": 2.340035371130514,
+    "kind": "official"
+  },
+  {
+    "id": "odeon",
+    "name": "Odéon",
+    "arrondissement": "6e",
+    "latitude": 48.847800629292664,
+    "longitude": 2.3363388275876775,
+    "kind": "official"
+  },
+  {
+    "id": "notre-dame-des-champs",
+    "name": "Notre-Dame-des-Champs",
+    "arrondissement": "6e",
+    "latitude": 48.84642759400415,
+    "longitude": 2.327356878234607,
+    "kind": "official"
+  },
+  {
+    "id": "saint-germain-des-pres",
+    "name": "Saint-Germain-des-Prés",
+    "arrondissement": "6e",
+    "latitude": 48.85528871996157,
+    "longitude": 2.3336568680904577,
+    "kind": "official"
+  },
+  {
+    "id": "saint-thomas-d-aquin",
+    "name": "Saint-Thomas-d'Aquin",
+    "arrondissement": "7e",
+    "latitude": 48.85526326937375,
+    "longitude": 2.3255876525808024,
+    "kind": "official"
+  },
+  {
+    "id": "invalides",
+    "name": "Invalides",
+    "arrondissement": "7e",
+    "latitude": 48.858514966137854,
+    "longitude": 2.3164447403399206,
+    "kind": "official"
+  },
+  {
+    "id": "ecole-militaire",
+    "name": "Ecole-Militaire",
+    "arrondissement": "7e",
+    "latitude": 48.85035926154756,
+    "longitude": 2.3110309362657557,
+    "kind": "official"
+  },
+  {
+    "id": "gros-caillou",
+    "name": "Gros-Caillou",
+    "arrondissement": "7e",
+    "latitude": 48.85829990387876,
+    "longitude": 2.3015415556941874,
+    "kind": "official"
+  },
+  {
+    "id": "champs-elysees",
+    "name": "Champs-Elysées",
+    "arrondissement": "8e",
+    "latitude": 48.867074492185395,
+    "longitude": 2.3086516846814,
+    "kind": "official"
+  },
+  {
+    "id": "faubourg-du-roule",
+    "name": "Faubourg-du-Roule",
+    "arrondissement": "8e",
+    "latitude": 48.874135575605415,
+    "longitude": 2.3041188097211407,
+    "kind": "official"
+  },
+  {
+    "id": "madeleine",
+    "name": "Madeleine",
+    "arrondissement": "8e",
+    "latitude": 48.87126549302095,
+    "longitude": 2.320053028649194,
+    "kind": "official"
+  },
+  {
+    "id": "europe",
+    "name": "Europe",
+    "arrondissement": "8e",
+    "latitude": 48.87814767585099,
+    "longitude": 2.3171746113048903,
+    "kind": "official"
+  },
+  {
+    "id": "saint-georges",
+    "name": "Saint-Georges",
+    "arrondissement": "9e",
+    "latitude": 48.87993433878255,
+    "longitude": 2.3328501965554715,
+    "kind": "official"
+  },
+  {
+    "id": "chaussee-d-antin",
+    "name": "Chaussée-d'Antin",
+    "arrondissement": "9e",
+    "latitude": 48.87354738020911,
+    "longitude": 2.332268868869704,
+    "kind": "official"
+  },
+  {
+    "id": "faubourg-montmartre",
+    "name": "Faubourg-Montmartre",
+    "arrondissement": "9e",
+    "latitude": 48.873934691758095,
+    "longitude": 2.343252579473346,
+    "kind": "official"
+  },
+  {
+    "id": "rochechouart",
+    "name": "Rochechouart",
+    "arrondissement": "9e",
+    "latitude": 48.87981191977869,
+    "longitude": 2.3448612910024424,
+    "kind": "official"
+  },
+  {
+    "id": "saint-vincent-de-paul",
+    "name": "Saint-Vincent-de-Paul",
+    "arrondissement": "10e",
+    "latitude": 48.88073523727109,
+    "longitude": 2.35747081044636,
+    "kind": "official"
+  },
+  {
+    "id": "porte-saint-denis",
+    "name": "Porte-Saint-Denis",
+    "arrondissement": "10e",
+    "latitude": 48.87361766097465,
+    "longitude": 2.352282894951218,
+    "kind": "official"
+  },
+  {
+    "id": "porte-saint-martin",
+    "name": "Porte-Saint-Martin",
+    "arrondissement": "10e",
+    "latitude": 48.87124465089237,
+    "longitude": 2.3615036473450113,
+    "kind": "official"
+  },
+  {
+    "id": "hopital-saint-louis",
+    "name": "Hôpital-Saint-Louis",
+    "arrondissement": "10e",
+    "latitude": 48.876008290020586,
+    "longitude": 2.36812301788768,
+    "kind": "official"
+  },
+  {
+    "id": "folie-mericourt",
+    "name": "Folie-Méricourt",
+    "arrondissement": "11e",
+    "latitude": 48.86740319007272,
+    "longitude": 2.3729648249267643,
+    "kind": "official"
+  },
+  {
+    "id": "saint-ambroise",
+    "name": "Saint-Ambroise",
+    "arrondissement": "11e",
+    "latitude": 48.86234502354463,
+    "longitude": 2.376118055918989,
+    "kind": "official"
+  },
+  {
+    "id": "roquette",
+    "name": "Roquette",
+    "arrondissement": "11e",
+    "latitude": 48.85706404083103,
+    "longitude": 2.380364061726767,
+    "kind": "official"
+  },
+  {
+    "id": "sainte-marguerite",
+    "name": "Sainte-Marguerite",
+    "arrondissement": "11e",
+    "latitude": 48.85209650697998,
+    "longitude": 2.3887648336025635,
+    "kind": "official"
+  },
+  {
+    "id": "bel-air",
+    "name": "Bel-Air",
+    "arrondissement": "12e",
+    "latitude": 48.8379956461218,
+    "longitude": 2.4331784419569793,
+    "kind": "official"
+  },
+  {
+    "id": "picpus",
+    "name": "Picpus",
+    "arrondissement": "12e",
+    "latitude": 48.830359242366505,
+    "longitude": 2.428826815083849,
+    "kind": "official"
+  },
+  {
+    "id": "bercy",
+    "name": "Bercy",
+    "arrondissement": "12e",
+    "latitude": 48.835209049865114,
+    "longitude": 2.3862100842120184,
+    "kind": "official"
+  },
+  {
+    "id": "quinze-vingts",
+    "name": "Quinze-Vingts",
+    "arrondissement": "12e",
+    "latitude": 48.84691594405347,
+    "longitude": 2.374401626479208,
+    "kind": "official"
+  },
+  {
+    "id": "salpetriere",
+    "name": "Salpêtrière",
+    "arrondissement": "13e",
+    "latitude": 48.83740588522813,
+    "longitude": 2.3633186351497177,
+    "kind": "official"
+  },
+  {
+    "id": "gare",
+    "name": "Gare",
+    "arrondissement": "13e",
+    "latitude": 48.82752745777257,
+    "longitude": 2.3723977369189355,
+    "kind": "official"
+  },
+  {
+    "id": "maison-blanche",
+    "name": "Maison-Blanche",
+    "arrondissement": "13e",
+    "latitude": 48.82312780567426,
+    "longitude": 2.352433149542824,
+    "kind": "official"
+  },
+  {
+    "id": "croulebarbe",
+    "name": "Croulebarbe",
+    "arrondissement": "13e",
+    "latitude": 48.83373367612219,
+    "longitude": 2.3476730460658106,
+    "kind": "official"
+  },
+  {
+    "id": "montparnasse",
+    "name": "Montparnasse",
+    "arrondissement": "14e",
+    "latitude": 48.8376230959726,
+    "longitude": 2.331783822887114,
+    "kind": "official"
+  },
+  {
+    "id": "parc-de-montsouris",
+    "name": "Parc-de-Montsouris",
+    "arrondissement": "14e",
+    "latitude": 48.823452771575106,
+    "longitude": 2.337070179863054,
+    "kind": "official"
+  },
+  {
+    "id": "petit-montrouge",
+    "name": "Petit-Montrouge",
+    "arrondissement": "14e",
+    "latitude": 48.82665262554388,
+    "longitude": 2.3264369992249008,
+    "kind": "official"
+  },
+  {
+    "id": "plaisance",
+    "name": "Plaisance",
+    "arrondissement": "14e",
+    "latitude": 48.83031704260011,
+    "longitude": 2.315304931573413,
+    "kind": "official"
+  },
+  {
+    "id": "saint-lambert",
+    "name": "Saint-Lambert",
+    "arrondissement": "15e",
+    "latitude": 48.83429362836976,
+    "longitude": 2.296919974448867,
+    "kind": "official"
+  },
+  {
+    "id": "necker",
+    "name": "Necker",
+    "arrondissement": "15e",
+    "latitude": 48.84271125032415,
+    "longitude": 2.3107774536393966,
+    "kind": "official"
+  },
+  {
+    "id": "grenelle",
+    "name": "Grenelle",
+    "arrondissement": "15e",
+    "latitude": 48.850171655497846,
+    "longitude": 2.291852642697574,
+    "kind": "official"
+  },
+  {
+    "id": "javel",
+    "name": "Javel",
+    "arrondissement": "15e",
+    "latitude": 48.83906040108164,
+    "longitude": 2.2780763469189345,
+    "kind": "official"
+  },
+  {
+    "id": "auteuil",
+    "name": "Auteuil",
+    "arrondissement": "16e",
+    "latitude": 48.850622342726865,
+    "longitude": 2.252276907538065,
+    "kind": "official"
+  },
+  {
+    "id": "muette",
+    "name": "Muette",
+    "arrondissement": "16e",
+    "latitude": 48.86327454383974,
+    "longitude": 2.259935831704838,
+    "kind": "official"
+  },
+  {
+    "id": "porte-dauphine",
+    "name": "Porte-Dauphine",
+    "arrondissement": "16e",
+    "latitude": 48.871765634282355,
+    "longitude": 2.2719177404675657,
+    "kind": "official"
+  },
+  {
+    "id": "chaillot",
+    "name": "Chaillot",
+    "arrondissement": "16e",
+    "latitude": 48.86843361445447,
+    "longitude": 2.2916790427412166,
+    "kind": "official"
+  },
+  {
+    "id": "ternes",
+    "name": "Ternes",
+    "arrondissement": "17e",
+    "latitude": 48.88117755028415,
+    "longitude": 2.289963738115156,
+    "kind": "official"
+  },
+  {
+    "id": "plaine-de-monceaux",
+    "name": "Plaine de Monceaux",
+    "arrondissement": "17e",
+    "latitude": 48.88504369140323,
+    "longitude": 2.302909824651906,
+    "kind": "official"
+  },
+  {
+    "id": "batignolles",
+    "name": "Batignolles",
+    "arrondissement": "17e",
+    "latitude": 48.888481513920595,
+    "longitude": 2.313856169006357,
+    "kind": "official"
+  },
+  {
+    "id": "epinettes",
+    "name": "Epinettes",
+    "arrondissement": "17e",
+    "latitude": 48.8949426537908,
+    "longitude": 2.321118743705154,
+    "kind": "official"
+  },
+  {
+    "id": "grandes-carrieres",
+    "name": "Grandes-Carrières",
+    "arrondissement": "18e",
+    "latitude": 48.89257777114592,
+    "longitude": 2.334363089913081,
+    "kind": "official"
+  },
+  {
+    "id": "clignancourt",
+    "name": "Clignancourt",
+    "arrondissement": "18e",
+    "latitude": 48.89166759106752,
+    "longitude": 2.3459787545931863,
+    "kind": "official"
+  },
+  {
+    "id": "goutte-d-or",
+    "name": "Goutte-d'Or",
+    "arrondissement": "18e",
+    "latitude": 48.89213818760241,
+    "longitude": 2.355536163296278,
+    "kind": "official"
+  },
+  {
+    "id": "la-chapelle",
+    "name": "La Chapelle",
+    "arrondissement": "18e",
+    "latitude": 48.894012169582226,
+    "longitude": 2.3643867790293243,
+    "kind": "official"
+  },
+  {
+    "id": "villette",
+    "name": "Villette",
+    "arrondissement": "19e",
+    "latitude": 48.88766108880349,
+    "longitude": 2.3744682121256666,
+    "kind": "official"
+  },
+  {
+    "id": "pont-de-flandre",
+    "name": "Pont-de-Flandre",
+    "arrondissement": "19e",
+    "latitude": 48.89555577457166,
+    "longitude": 2.384777229270242,
+    "kind": "official"
+  },
+  {
+    "id": "amerique",
+    "name": "Amérique",
+    "arrondissement": "19e",
+    "latitude": 48.88163816729657,
+    "longitude": 2.3954401666237373,
+    "kind": "official"
+  },
+  {
+    "id": "combat",
+    "name": "Combat",
+    "arrondissement": "19e",
+    "latitude": 48.87863907572485,
+    "longitude": 2.380127281829295,
+    "kind": "official"
+  },
+  {
+    "id": "belleville",
+    "name": "Belleville",
+    "arrondissement": "20e",
+    "latitude": 48.87153120058614,
+    "longitude": 2.3875492398498035,
+    "kind": "official"
+  },
+  {
+    "id": "saint-fargeau",
+    "name": "Saint-Fargeau",
+    "arrondissement": "20e",
+    "latitude": 48.87103473909125,
+    "longitude": 2.406171530151038,
+    "kind": "official"
+  },
+  {
+    "id": "pere-lachaise",
+    "name": "Père-Lachaise",
+    "arrondissement": "20e",
+    "latitude": 48.86371948395739,
+    "longitude": 2.395272820760115,
+    "kind": "official"
+  },
+  {
+    "id": "charonne",
+    "name": "Charonne",
+    "arrondissement": "20e",
+    "latitude": 48.854760283035255,
+    "longitude": 2.407430328235969,
+    "kind": "official"
+  }
+]
