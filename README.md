@@ -13,6 +13,8 @@ Ouvrir http://localhost:3000. Node.js 20.9 minimum (développement effectué ave
 
 Pour activer l’assistant OpenAI et sa recherche web, copier `.env.example` vers `.env.local`, puis renseigner `OPENAI_API_KEY`. La clé reste uniquement côté serveur dans `/api/ask` et ne doit jamais être préfixée par `NEXT_PUBLIC_`.
 
+Pour les établissements réels, activer **Places API (New)** dans Google Cloud puis renseigner `GOOGLE_PLACES_API_KEY`. La route serveur demande au maximum 10 résultats et uniquement les champs utiles ; sans cette clé, FLÂNE utilise son catalogue local OpenStreetMap.
+
 ## Vérifier
 
 ```bash

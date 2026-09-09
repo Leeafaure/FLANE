@@ -16,13 +16,16 @@ export type Place = Coordinates & {
   shortDescription: string;
   editorialDescription: string;
   priceLevel: 0 | 1 | 2 | 3 | null;
-  source?: "osm";
+  source?: "osm" | "google";
   sourceUrl?: string;
   website?: string;
   googleMapsUrl?: string;
   openingHours?: string;
   cuisine?: string;
   accessibility?: string;
+  rating?: number;
+  userRatingCount?: number;
+  openNow?: boolean;
   updatedAt?: string;
   tags: string[];
   indoor: boolean;

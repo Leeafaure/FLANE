@@ -850,6 +850,20 @@ img {
   margin-top: 10px;
   min-height: 38px;
 }
+.place-live-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 9px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.open-now {
+  color: #426844;
+}
+.closed-now {
+  color: var(--burgundy);
+}
 .place-card-bottom {
   border-top: 1px solid #ebe7de;
   margin-top: 16px;

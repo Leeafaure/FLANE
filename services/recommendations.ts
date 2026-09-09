@@ -29,6 +29,10 @@ export function getRecommendations(
       score += (input.mood ?? []).filter((m) => p.tags.includes(m)).length * 16;
       if (input.timeAvailable && walkingTime > input.timeAvailable / 2)
         score -= 40;
+      if (p.rating) score += Math.min(16, p.rating * 3);
+      if (p.userRatingCount)
+        score += Math.min(8, Math.log10(p.userRatingCount + 1) * 3);
+      if (p.openNow === false) score -= 55;
       return { ...p, distance, walkingTime, score };
     })
     .filter(

@@ -106,6 +106,23 @@ export function PlaceCard({
             {minutes} min
           </span>
         </div>
+        {(place.rating || place.openNow !== undefined) && (
+          <div className="place-live-facts">
+            {place.rating && (
+              <span>
+                ★ {place.rating.toFixed(1)}
+                {place.userRatingCount
+                  ? ` · ${place.userRatingCount.toLocaleString("fr-FR")} avis`
+                  : ""}
+              </span>
+            )}
+            {place.openNow !== undefined && (
+              <span className={place.openNow ? "open-now" : "closed-now"}>
+                {place.openNow ? "Ouvert maintenant" : "Fermé maintenant"}
+              </span>
+            )}
+          </div>
+        )}
         <Link href={`/lieu/${place.id}`} className="place-title">
           <h3>{place.name}</h3>
           <ArrowUpRight size={17} />
