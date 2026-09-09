@@ -5,8 +5,8 @@ import { Sparkles, ArrowUp, LoaderCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useFlane } from "./AppProvider";
 import { PlaceCard } from "./PlaceCard";
-import { localAssistant } from "@/services/assistant";
-import { parseRequest } from "@/services/assistant";
+import { localAssistant, parseRequest } from "@/services/assistant";
+import { askOpenAI } from "@/services/ai";
 import { discoverPlaces } from "@/services/discovery";
 import type { RankedPlace } from "@/types";
 const suggestions = [
@@ -44,15 +44,20 @@ export function AskPage() {
       const context = { location, weather };
       const intent = parseRequest(text);
       const point = intent.location ?? location;
-      const nearby = await discoverPlaces(point);
-      const answer = {
-        ...(await localAssistant.ask(
-          text,
-          { ...context, location: point },
-          nearby.places,
-        )),
-        searched: false,
-      };
+      let answer;
+      try {
+        answer = await askOpenAI(text, { ...context, location: point });
+      } catch {
+        const nearby = await discoverPlaces(point);
+        answer = {
+          ...(await localAssistant.ask(
+            text,
+            { ...context, location: point },
+            nearby.places,
+          )),
+          searched: false,
+        };
+      }
       setHistory((h) => [
         ...h,
         { id: crypto.randomUUID(), question: text.trim(), ...answer },
@@ -132,8 +137,8 @@ export function AskPage() {
           ))}
         </div>
         <p className="chat-help">
-          Des recommandations locales, triées selon le quartier, la distance, la
-          météo, le temps disponible et les informations publiées par les lieux.
+          L’IA recoupe le web avec le carnet local : quartier, distance, météo,
+          temps disponible et informations publiées par les lieux.
         </p>
         <div className="conversation" aria-live="polite" aria-busy={busy}>
           {history.map((exchange, i) => (
