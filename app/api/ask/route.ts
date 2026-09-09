@@ -15,6 +15,22 @@ type AskBody = {
   };
 };
 
+function responseText(payload: unknown) {
+  if (!payload || typeof payload !== "object") return "";
+  const response = payload as {
+    output_text?: unknown;
+    output?: { content?: { type?: string; text?: string }[] }[];
+  };
+  if (typeof response.output_text === "string")
+    return response.output_text.trim();
+  return (response.output ?? [])
+    .flatMap((item) => item.content ?? [])
+    .filter((content) => content.type === "output_text")
+    .map((content) => content.text ?? "")
+    .join("\n")
+    .trim();
+}
+
 export async function POST(request: NextRequest) {
   if (!process.env.OPENAI_API_KEY) {
     return NextResponse.json(
@@ -85,9 +101,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error }, { status: response.status });
     }
     const message =
-      typeof payload.output_text === "string"
-        ? payload.output_text.trim()
-        : "J’ai une piste, mais pas encore les mots pour te la raconter.";
+      responseText(payload) ||
+      "J’ai une piste, mais pas encore les mots pour te la raconter.";
     return NextResponse.json({
       configured: true,
       message,
