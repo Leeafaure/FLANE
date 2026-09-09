@@ -1,5 +1,11 @@
 export type Coordinates = { latitude: number; longitude: number };
-export type Area = Coordinates & { id:string; name:string; arrondissement:string; kind:"official"|"popular"|"arrondissement"; aliases?:string[] };
+export type Area = Coordinates & {
+  id: string;
+  name: string;
+  arrondissement: string;
+  kind: "official" | "popular" | "arrondissement";
+  aliases?: string[];
+};
 export type Category = "restaurant" | "cafe" | "walk" | "shop" | "curiosity";
 export type Place = Coordinates & {
   id: string;

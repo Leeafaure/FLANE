@@ -59,7 +59,13 @@ export function Header() {
           <LocateFixed size={18} />
           {locating ? "On te situe…" : "Utiliser ma position"}
         </button>
-        <AreaSearch selected={area} onSelect={a=>{setArea(a.id);setOpen(false);}}/>
+        <AreaSearch
+          selected={area}
+          onSelect={(a) => {
+            setArea(a.id);
+            setOpen(false);
+          }}
+        />
       </Sheet>
     </>
   );

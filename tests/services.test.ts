@@ -24,7 +24,7 @@ test("recommendations respect category, budget, duration and the six-place cap",
   assert.ok(results.length <= 6);
   for (const place of results) {
     assert.equal(place.category, "cafe");
-    assert.ok(place.priceLevel <= 1);
+    assert.ok(place.priceLevel === null || place.priceLevel <= 1);
     assert.ok(place.walkingTime + 10 <= 30);
   }
 });

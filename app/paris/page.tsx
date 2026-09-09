@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { neighborhoods, areas } from "@/data/neighborhoods";
+import { neighborhoods } from "@/data/neighborhoods";
+import { allAreas } from "@/services/areas";
+import { AreaSearch } from "@/components/AreaSearch";
 import { NeighborhoodCard } from "@/components/NeighborhoodCard";
 import { Reveal } from "@/components/Reveal";
 export const metadata: Metadata = { title: "Les petits Paris" };
@@ -32,13 +34,14 @@ export default function Paris() {
             Ouvrir la carte <ArrowUpRight size={15} />
           </Link>
         </div>
-        <div className="area-grid">
-          {areas
-            .filter((a) => !neighborhoods.some((n) => n.id === a.id))
+        <AreaSearch linkPrefix="/envies?quartier=" />
+        <div className="area-grid area-directory">
+          {allAreas
+            .filter((a) => a.kind !== "arrondissement")
             .map((a) => (
               <Link
                 className="area-option"
-                href={`/envies?quartier=${a.id === "abbesses" ? "montmartre" : a.id === "saint-paul" ? "marais" : a.id}`}
+                href={`/envies?quartier=${a.id}`}
                 key={a.id}
               >
                 <span>{a.name}</span>

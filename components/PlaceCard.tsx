@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import { PlaceVisual } from "./PlaceVisual";
 import Link from "next/link";
 import { Heart, Footprints, ArrowUpRight, Plus } from "lucide-react";
 import { motion } from "framer-motion";
@@ -93,12 +93,7 @@ export function PlaceCard({
     <article className={`place-card ${compact ? "compact" : ""}`}>
       <div className="place-photo">
         <Link href={`/lieu/${place.id}`} tabIndex={-1} aria-hidden="true">
-          <Image
-            src={place.image}
-            alt=""
-            fill
-            sizes="(max-width: 600px) 90vw, 360px"
-          />
+          <PlaceVisual place={place} />
         </Link>
         <FavoriteButton id={place.id} name={place.name} />
         <span className="photo-tag">{categoryLabels[place.category]}</span>
@@ -118,9 +113,11 @@ export function PlaceCard({
         <p>{place.shortDescription}</p>
         <div className="place-card-bottom">
           <span>
-            {place.priceLevel
-              ? "€".repeat(place.priceLevel)
-              : "Une pause gratuite"}
+            {place.priceLevel === null
+              ? "Budget non renseigné"
+              : place.priceLevel
+                ? "€".repeat(place.priceLevel)
+                : "Une pause gratuite"}
           </span>
           <CollectionButton place={place} />
         </div>

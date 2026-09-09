@@ -13,8 +13,11 @@ import {
 import { useFlane } from "./AppProvider";
 import { TimeSelector, timeOptions } from "./TimeSelector";
 import { WalkingTimeline } from "./WalkingTimeline";
-import { neighborhoods } from "@/data/neighborhoods";
+import { allAreas, findArea } from "@/services/areas";
+import { neighborhoods as editorialNeighborhoods } from "@/data/neighborhoods";
 import { buildWalk } from "@/services/walks";
+import { useDiscovery } from "./useDiscovery";
+import { DiscoveryStatus } from "./DiscoveryStatus";
 export function WalkPage() {
   const query = useSearchParams();
   const { weather, area, location } = useFlane();
@@ -23,11 +26,7 @@ export function WalkPage() {
       timeOptions.some((t) => t.value === initial) ? initial : 60,
     ),
     [neighborhood, setNeighborhood] = useState(
-      neighborhoods.some((n) => n.id === query.get("quartier"))
-        ? query.get("quartier")!
-        : neighborhoods.some((n) => n.id === area)
-          ? area
-          : "batignolles",
+      findArea(query.get("quartier")) ? query.get("quartier")! : area,
     ),
     [fromHere, setFromHere] = useState(false),
     [start, setStart] = useState<Date | null>(null);
@@ -35,13 +34,16 @@ export function WalkPage() {
     const timer = setTimeout(() => setStart(new Date()), 0);
     return () => clearTimeout(timer);
   }, []);
-  const n = neighborhoods.find((n) => n.id === neighborhood)!;
+  const n = findArea(neighborhood) ?? findArea("batignolles")!;
+  const editorial = editorialNeighborhoods.find((item) => item.id === n.id);
+  const { places, loading, error, retry } = useDiscovery(n);
   const walk = buildWalk(
     neighborhood,
     duration,
     weather,
     start ?? new Date("2026-01-01T10:00:00"),
     fromHere ? location : undefined,
+    places,
   );
   return (
     <div className="page-shell">
@@ -72,7 +74,7 @@ export function WalkPage() {
           value={neighborhood}
           onChange={(e) => setNeighborhood(e.target.value)}
         >
-          {neighborhoods.map((n) => (
+          {allAreas.map((n) => (
             <option key={n.id} value={n.id}>
               {n.name}
             </option>
@@ -86,6 +88,7 @@ export function WalkPage() {
           Inclure le trajet depuis ma position
         </button>
       </div>
+      <DiscoveryStatus loading={loading} error={error} onRetry={retry} />
       <div className="walk-layout">
         <div>
           <div className="walk-summary">
@@ -107,7 +110,7 @@ export function WalkPage() {
                   : "Les trajets et les pauses sont compris. Prends ton temps."}
             </p>
           </div>
-          {!start ? (
+          {!start || loading ? (
             <div className="loading-block">On prépare les étapes…</div>
           ) : walk.stops.length ? (
             <WalkingTimeline stops={walk.stops} />
@@ -140,16 +143,22 @@ export function WalkPage() {
         </div>
         <aside className="walk-side">
           <div className="walk-side-image">
-            <Image
-              src={n.image}
-              alt={`Une invitation à flâner à ${n.name}`}
-              fill
-              sizes="40vw"
-            />
+            {editorial ? (
+              <Image
+                src={editorial.image}
+                alt={`Une invitation à flâner à ${n.name}`}
+                fill
+                sizes="40vw"
+              />
+            ) : (
+              <div className="walk-area-visual">{n.name}</div>
+            )}
             <div>
               <span className="eyebrow">LE BONHEUR EST EN CHEMIN</span>
               <h2>{n.name}</h2>
-              <span>{n.subtitle}</span>
+              <span>
+                {editorial?.subtitle ?? "Des idées choisies autour de toi."}
+              </span>
             </div>
           </div>
           <p>

@@ -8,7 +8,9 @@ import { MoodFilters } from "./MoodFilters";
 import { PlaceCard } from "./PlaceCard";
 import { getRecommendations } from "@/services/recommendations";
 import { categoryLabels } from "@/data/places";
-import { areas } from "@/data/neighborhoods";
+import { findArea } from "@/services/areas";
+import { useDiscovery } from "./useDiscovery";
+import { DiscoveryStatus } from "./DiscoveryStatus";
 import type { Category } from "@/types";
 export function RecommendationsPage() {
   const query = useSearchParams();
@@ -20,15 +22,19 @@ export function RecommendationsPage() {
     [mood, setMood] = useState<string[]>([]),
     [budget, setBudget] = useState(3);
   const neighborhood = query.get("quartier") ?? undefined;
-  const results = getRecommendations({
-    location,
-    weather,
-    category,
-    mood,
-    budget,
-    neighborhood,
-  });
-  const area = areas.find((a) => a.id === neighborhood);
+  const area = findArea(neighborhood);
+  const point = area ?? location;
+  const { places, loading, error, retry } = useDiscovery(point);
+  const results = getRecommendations(
+    {
+      location: point,
+      weather,
+      category,
+      mood,
+      budget,
+    },
+    places,
+  );
   return (
     <div className="page-shell">
       <Link href="/" className="back-link">
@@ -88,6 +94,7 @@ export function RecommendationsPage() {
         </select>
       </div>
       <MoodFilters selected={mood} onChange={setMood} />
+      <DiscoveryStatus loading={loading} error={error} onRetry={retry} />
       <div className="results-intro">
         <p>À ta place, on commencerait par ici.</p>
         <span>
@@ -95,7 +102,9 @@ export function RecommendationsPage() {
           {results.length === 1 ? "petit détour" : "petits détours"}
         </span>
       </div>
-      {results.length ? (
+      {loading ? (
+        <div className="loading-block">On ouvre le quartier…</div>
+      ) : results.length ? (
         <div className="place-grid">
           {results.map((p) => (
             <PlaceCard key={p.id} place={p} />

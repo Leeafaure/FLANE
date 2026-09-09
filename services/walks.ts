@@ -1,6 +1,7 @@
 import { places } from "@/data/places";
 import { walkTemplates } from "@/data/walks";
 import { distanceBetween, walkingMinutes } from "@/services/location";
+import { findArea } from "@/services/areas";
 import type { Coordinates, Weather, WalkStop } from "@/types";
 export function buildWalk(
   neighborhood: string,
@@ -8,10 +9,33 @@ export function buildWalk(
   weather: Weather,
   start: Date = new Date(),
   origin?: Coordinates,
+  pool: typeof places = places,
 ): { stops: WalkStop[]; totalMinutes: number; distance: number } {
-  const candidates = (walkTemplates[neighborhood] ?? walkTemplates.batignolles)
-    .map((id) => places.find((p) => p.id === id)!)
-    .filter((p) => !weather.rain || p.indoor);
+  const template = walkTemplates[neighborhood];
+  const area = findArea(neighborhood);
+  const candidates = (
+    template
+      ? template.map((id) => pool.find((p) => p.id === id)!).filter(Boolean)
+      : [...pool]
+          .filter(
+            (place) =>
+              (area && distanceBetween(area, place) <= 1.6) ||
+              place.neighborhood === neighborhood,
+          )
+          .sort((a, b) => {
+            const rank = {
+              cafe: 0,
+              walk: 1,
+              curiosity: 2,
+              shop: 3,
+              restaurant: 4,
+            };
+            return rank[a.category] - rank[b.category];
+          })
+          .slice(0, 8)
+  ).filter(
+    (p): p is (typeof places)[number] => !!p && (!weather.rain || p.indoor),
+  );
   let elapsed = 0,
     distance = 0,
     previous: Coordinates | undefined = origin;

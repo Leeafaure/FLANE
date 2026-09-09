@@ -29,7 +29,30 @@ export const localNotebookRepository: NotebookRepository = {
             c.placeIds.every((id: unknown) => typeof id === "string"),
         )
       )
-        return {...value,savedPlaces:Array.isArray(value.savedPlaces)?value.savedPlaces.filter((p:Place)=>p&&typeof p.id==="string"&&/^osm-(node|way|relation)-\d+$/.test(p.id)&&typeof p.name==="string"&&Number.isFinite(p.latitude)&&Number.isFinite(p.longitude)&&["cafe","restaurant","walk","shop","curiosity"].includes(p.category)&&Array.isArray(p.tags)&&Array.isArray(p.weatherSuitability)&&typeof p.address==="string"&&typeof p.shortDescription==="string"&&typeof p.editorialDescription==="string"&&p.image===""&&p.source==="osm"):[]};
+        return {
+          ...value,
+          savedPlaces: Array.isArray(value.savedPlaces)
+            ? value.savedPlaces.filter(
+                (p: Place) =>
+                  p &&
+                  typeof p.id === "string" &&
+                  /^osm-(node|way|relation)-\d+$/.test(p.id) &&
+                  typeof p.name === "string" &&
+                  Number.isFinite(p.latitude) &&
+                  Number.isFinite(p.longitude) &&
+                  ["cafe", "restaurant", "walk", "shop", "curiosity"].includes(
+                    p.category,
+                  ) &&
+                  Array.isArray(p.tags) &&
+                  Array.isArray(p.weatherSuitability) &&
+                  typeof p.address === "string" &&
+                  typeof p.shortDescription === "string" &&
+                  typeof p.editorialDescription === "string" &&
+                  p.image === "" &&
+                  p.source === "osm",
+              )
+            : [],
+        };
     } catch {}
     return structuredClone(emptyNotebook);
   },

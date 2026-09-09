@@ -15,7 +15,6 @@ import {
   MoveUpRight,
 } from "lucide-react";
 import { neighborhoods } from "@/data/neighborhoods";
-import { places } from "@/data/places";
 import { NeighborhoodCard } from "@/components/NeighborhoodCard";
 import { PlaceCard } from "@/components/PlaceCard";
 import { WeatherCard } from "@/components/WeatherCard";
@@ -25,6 +24,7 @@ import { Reveal } from "@/components/Reveal";
 import { Sheet } from "@/components/Sheet";
 import { useFlane } from "@/components/AppProvider";
 import { getRecommendations } from "@/services/recommendations";
+import { DiscoveryStatus } from "@/components/DiscoveryStatus";
 import { distanceBetween, walkingMinutes } from "@/services/location";
 const intents = [
   {
@@ -57,17 +57,25 @@ const intents = [
   },
 ];
 export default function Home() {
-  const { location, weather } = useFlane();
+  const { location, weather, nearbyPlaces } = useFlane();
   const [mood, setMood] = useState<string[]>([]),
     [time, setTime] = useState(60),
-    [surprise, setSurprise] = useState<(typeof places)[number] | null>(null);
-  const picks = getRecommendations({ location, weather, mood }).slice(0, 3);
-  function random() {
-    const options = getRecommendations({ location, weather }).filter(
-      (p) => p.id !== surprise?.id,
+    [surprise, setSurprise] = useState<(typeof nearbyPlaces)[number] | null>(
+      null,
     );
+  const picks = getRecommendations(
+    { location, weather, mood },
+    nearbyPlaces,
+  ).slice(0, 3);
+  function random() {
+    const options = getRecommendations(
+      { location, weather },
+      nearbyPlaces,
+    ).filter((p) => p.id !== surprise?.id);
     setSurprise(
-      options[Math.floor(Math.random() * options.length)] ?? places[0],
+      options[Math.floor(Math.random() * options.length)] ??
+        nearbyPlaces[0] ??
+        null,
     );
   }
   return (
@@ -209,6 +217,7 @@ export default function Home() {
           <span className="small-note">Un peu de ceci, un peu de cela.</span>
         </Reveal>
         <MoodFilters selected={mood} onChange={setMood} />
+        <DiscoveryStatus />
         <div className="place-grid mood-results">
           {picks.map((p) => (
             <PlaceCard key={p.id} place={p} />

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useFlane } from "./AppProvider";
 import { PlaceCard } from "./PlaceCard";
 import { localAssistant } from "@/services/assistant";
+import { askOpenAI } from "@/services/ai";
 import type { RankedPlace } from "@/types";
 const suggestions = [
   "Un café cosy près de moi",
@@ -20,6 +21,7 @@ type Exchange = {
   question: string;
   message: string;
   places: RankedPlace[];
+  searched?: boolean;
 };
 export function AskPage() {
   const params = useSearchParams();
@@ -38,7 +40,14 @@ export function AskPage() {
     lock.current = true;
     setBusy(true);
     try {
-      const answer = await localAssistant.ask(text, { location, weather });
+      const context = { location, weather };
+      let answer;
+      try {
+        answer = await askOpenAI(text, context);
+      } catch {
+        const local = await localAssistant.ask(text, context);
+        answer = { ...local, searched: false };
+      }
       setHistory((h) => [
         ...h,
         { id: crypto.randomUUID(), question: text.trim(), ...answer },
@@ -53,6 +62,7 @@ export function AskPage() {
           message:
             "J’ai perdu le fil un instant. Essaie de reformuler ton envie.",
           places: [],
+          searched: false,
         },
       ]);
     } finally {
@@ -117,8 +127,8 @@ export function AskPage() {
           ))}
         </div>
         <p className="chat-help">
-          Une petite sélection parisienne, sans connexion à un assistant IA. Les
-          idées viennent de notre carnet de démonstration.
+          Quand la clé OpenAI est configurée, FLÂNE cherche et recoupe sur le
+          web. Sinon, le carnet local prend le relais.
         </p>
         <div className="conversation" aria-live="polite" aria-busy={busy}>
           {history.map((exchange, i) => (
@@ -133,7 +143,11 @@ export function AskPage() {
                 <div className="chat-answer-header">
                   <Sparkles size={17} />
                   <strong>FLÂNE</strong>
-                  <span>a une petite idée</span>
+                  <span>
+                    {exchange.searched
+                      ? "a vérifié sur le web"
+                      : "a une petite idée"}
+                  </span>
                 </div>
                 <p>{exchange.message}</p>
                 <div className="place-grid">

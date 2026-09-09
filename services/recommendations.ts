@@ -1,14 +1,20 @@
 import { places } from "@/data/places";
 import { distanceBetween, walkingMinutes } from "@/services/location";
 import type { RankedPlace, RecommendationInput, Place } from "@/types";
-export function getRecommendations(input: RecommendationInput, pool:Place[]=places): RankedPlace[] {
+export function getRecommendations(
+  input: RecommendationInput,
+  pool: Place[] = places,
+): RankedPlace[] {
   return pool
     .filter(
       (p) =>
         (!input.category || p.category === input.category) &&
-        (input.radius===undefined || distanceBetween(input.location,p)<=input.radius) &&
+        (input.radius === undefined ||
+          distanceBetween(input.location, p) <= input.radius) &&
         (!input.neighborhood || p.neighborhood === input.neighborhood) &&
-        (input.budget === undefined || input.budget === 3 || (p.priceLevel !== null && p.priceLevel <= input.budget)),
+        (input.budget === undefined ||
+          input.budget === 3 ||
+          (p.priceLevel !== null && p.priceLevel <= input.budget)),
     )
     .map((p) => {
       const distance = distanceBetween(input.location, p),

@@ -24,10 +24,10 @@ type AppContextValue = {
   area: string;
   allPlaces: Place[];
   nearbyPlaces: Place[];
-  registerPlaces: (places:Place[])=>void;
+  registerPlaces: (places: Place[]) => void;
   discoveryLoading: boolean;
   discoveryError: string;
-  retryDiscovery: ()=>void;
+  retryDiscovery: () => void;
   setArea: (id: string) => void;
   locate: () => Promise<void>;
   locating: boolean;
@@ -47,11 +47,43 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [location, setLocation] = useState(defaultLocation),
     [area, setAreaName] = useState("guy-moquet"),
     [locating, setLocating] = useState(false);
-  const [allPlaces,setAllPlaces]=useState<Place[]>(editorialPlaces);
-  const [discoveryLoading,setDiscoveryLoading]=useState(false),[discoveryError,setDiscoveryError]=useState(""),[retry,setRetry]=useState(0);
-  const registerPlaces=useCallback((incoming:Place[])=>setAllPlaces(previous=>{const map=new Map(previous.map(p=>[p.id,p]));for(const p of incoming)map.set(p.id,p);return [...map.values()];}),[]);
-  useEffect(()=>{let active=true;const timer=setTimeout(()=>{setDiscoveryLoading(true);setDiscoveryError("");discoverPlaces(location).then(result=>{if(active)registerPlaces(result.places);}).catch(error=>{if(active)setDiscoveryError(error.message);}).finally(()=>{if(active)setDiscoveryLoading(false);});},0);return()=>{active=false;clearTimeout(timer);};},[location.latitude,location.longitude,retry,registerPlaces]);
-  const nearbyPlaces=allPlaces.filter(p=>distanceBetween(location,p)<=1.8);
+  const [allPlaces, setAllPlaces] = useState<Place[]>(editorialPlaces);
+  const [discoveryLoading, setDiscoveryLoading] = useState(false),
+    [discoveryError, setDiscoveryError] = useState(""),
+    [retry, setRetry] = useState(0);
+  const registerPlaces = useCallback(
+    (incoming: Place[]) =>
+      setAllPlaces((previous) => {
+        const map = new Map(previous.map((p) => [p.id, p]));
+        for (const p of incoming) map.set(p.id, p);
+        return [...map.values()];
+      }),
+    [],
+  );
+  useEffect(() => {
+    let active = true;
+    const timer = setTimeout(() => {
+      setDiscoveryLoading(true);
+      setDiscoveryError("");
+      discoverPlaces(location)
+        .then((result) => {
+          if (active) registerPlaces(result.places);
+        })
+        .catch((error) => {
+          if (active) setDiscoveryError(error.message);
+        })
+        .finally(() => {
+          if (active) setDiscoveryLoading(false);
+        });
+    }, 0);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [location, retry, registerPlaces]);
+  const nearbyPlaces = allPlaces.filter(
+    (p) => distanceBetween(location, p) <= 1.8,
+  );
   const [weather, setWeather] = useState<Weather>(getMockWeather),
     [weatherLoading, setWeatherLoading] = useState(false);
   const [notebook, setNotebook] = useState<Notebook>(emptyNotebook),
@@ -59,10 +91,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
     [notice, setNotice] = useState("");
   useEffect(() => {
     const handle = setTimeout(() => {
-      const saved=localNotebookRepository.load();
+      const saved = localNotebookRepository.load();
       setNotebook(saved);
-      if(saved.savedPlaces?.length)registerPlaces(saved.savedPlaces);
-      try { const previous=findArea(localStorage.getItem("flane:area"));if(previous){setAreaName(previous.id);setLocation(previous);} }catch{}
+      if (saved.savedPlaces?.length) registerPlaces(saved.savedPlaces);
+      try {
+        const previous = findArea(localStorage.getItem("flane:area"));
+        if (previous) {
+          setAreaName(previous.id);
+          setLocation(previous);
+        }
+      } catch {}
       setReady(true);
     }, 0);
     return () => clearTimeout(handle);
@@ -75,7 +113,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const toast = useCallback((message: string) => setNotice(message), []);
   function persist(next: Notebook) {
     try {
-      const complete={...next,savedPlaces:allPlaces.filter(p=>p.source==="osm"&&next.favorites.includes(p.id))};
+      const complete = {
+        ...next,
+        savedPlaces: allPlaces.filter(
+          (p) => p.source === "osm" && next.favorites.includes(p.id),
+        ),
+      };
       localNotebookRepository.save(complete);
       setNotebook(complete);
       return true;
@@ -90,7 +133,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const selected = findArea(id);
     if (selected) {
       setAreaName(id);
-      try{localStorage.setItem("flane:area",id);}catch{}
+      try {
+        localStorage.setItem("flane:area", id);
+      } catch {}
       setLocation(selected);
       setWeather(getMockWeather());
     }
@@ -215,7 +260,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       value={{
         location,
         area,
-        allPlaces,nearbyPlaces,registerPlaces,discoveryLoading,discoveryError,retryDiscovery:()=>setRetry(v=>v+1),
+        allPlaces,
+        nearbyPlaces,
+        registerPlaces,
+        discoveryLoading,
+        discoveryError,
+        retryDiscovery: () => setRetry((v) => v + 1),
         setArea,
         locate,
         locating,

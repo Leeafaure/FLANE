@@ -12,7 +12,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import { ArrowUpRight, Footprints, LocateFixed, MapPin, X } from "lucide-react";
-import { places, categoryLabels } from "@/data/places";
+import { categoryLabels } from "@/data/places";
 import { neighborhoods } from "@/data/neighborhoods";
 import { useFlane } from "./AppProvider";
 import { FavoriteButton } from "./PlaceCard";
@@ -71,22 +71,22 @@ export function Map({
   initialPlace: string | null;
   route?: string[];
 }) {
-  const { location } = useFlane();
+  const { location, nearbyPlaces } = useFlane();
   const [selectedId, setSelectedId] = useState<string | null>(
     initialPlace ?? route?.[0] ?? "square-batignolles",
   );
   const [tileError, setTileError] = useState(false);
-  const selected = places.find((p) => p.id === selectedId);
+  const selected = nearbyPlaces.find((p) => p.id === selectedId);
   const routeKey = route?.join(",") ?? "";
   const routePlaces = useMemo(
     () =>
       routeKey
         .split(",")
-        .map((id) => places.find((p) => p.id === id))
-        .filter((p): p is (typeof places)[number] => !!p),
-    [routeKey],
+        .map((id) => nearbyPlaces.find((p) => p.id === id))
+        .filter((p): p is (typeof nearbyPlaces)[number] => !!p),
+    [routeKey, nearbyPlaces],
   );
-  const shown = places.filter(
+  const shown = nearbyPlaces.filter(
     (p) =>
       (category === "all" || p.category === category) &&
       (!route || route.includes(p.id)),
@@ -94,8 +94,8 @@ export function Map({
   const active =
     selected && shown.some((p) => p.id === selected.id) ? selected : undefined;
   const distance = active ? distanceBetween(location, active) : 0;
-  const initial = places.find((p) => p.id === initialPlace);
-  const nearby = [...places]
+  const initial = nearbyPlaces.find((p) => p.id === initialPlace);
+  const nearby = [...nearbyPlaces]
     .sort((a, b) => distanceBetween(location, a) - distanceBetween(location, b))
     .slice(0, 6);
   const bounds: Coordinates[] =

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { places } from "@/data/places";
+import { getCatalogPlace } from "@/services/catalog.server";
 import { PlaceDetail } from "@/components/PlaceDetail";
 export function generateStaticParams() {
   return places.map((p) => ({ slug: p.id }));
@@ -19,7 +20,7 @@ export default async function PlacePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const place = places.find((p) => p.id === slug);
+  const place = await getCatalogPlace(slug);
   if (!place) notFound();
   return <PlaceDetail place={place} />;
 }
