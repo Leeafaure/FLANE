@@ -4,6 +4,7 @@ import { getRecommendations } from "@/services/recommendations";
 import { parseSearchIntent } from "@/services/searchIntent";
 import { searchGooglePlaces } from "@/services/googlePlaces.server";
 import { getMockWeather } from "@/services/weather";
+import { matchArea } from "@/services/areas";
 
 export const runtime = "nodejs";
 
@@ -41,16 +42,17 @@ export async function POST(request: NextRequest) {
   }
 
   const intent = parseSearchIntent(question);
+  const searchLocation = matchArea(question) ?? location;
   try {
     let candidates;
     try {
-      candidates = await searchGooglePlaces(question, intent, location);
+      candidates = await searchGooglePlaces(question, intent, searchLocation);
     } catch {
-      candidates = (await getNearbyPlaces(location)).places;
+      candidates = (await getNearbyPlaces(searchLocation)).places;
     }
     const ranked = getRecommendations(
       {
-        location,
+        location: searchLocation,
         weather: { ...getMockWeather(), ...body.weather },
         category: undefined,
         mood: intent.moods,
