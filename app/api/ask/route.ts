@@ -87,7 +87,6 @@ export async function POST(request: NextRequest) {
         model: process.env.OPENAI_MODEL ?? "gpt-5-mini",
         input: instructions,
         tools: [{ type: "web_search" }],
-        reasoning: { effort: "minimal" },
         store: false,
         max_output_tokens: 700,
       }),
