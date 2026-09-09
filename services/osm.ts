@@ -61,6 +61,16 @@ export function normalizeOsmPlace(
       ? Number(postcode.slice(-2))
       : parseInt(area.arrondissement);
   const free = t.fee === "no" || (category === "walk" && t.fee !== "yes");
+  const address = t["addr:street"]
+    ? `${t["addr:housenumber"] ?? ""} ${t["addr:street"]}, Paris ${arr}e`.trim()
+    : `Paris ${arr}e · adresse précise non renseignée`;
+  const website = t.website ?? t["contact:website"] ?? t.url;
+  const validWebsite = website?.startsWith("http") ? website : undefined;
+  const facts = [
+    t.cuisine ? t.cuisine.replaceAll(";", " · ") : undefined,
+    t.outdoor_seating === "yes" ? "terrasse signalée" : undefined,
+    t.wheelchair === "yes" ? "accès fauteuil signalé" : undefined,
+  ].filter(Boolean);
   return {
     id: `osm-${e.type}-${e.id}`,
     name: t.name.slice(0, 150),
@@ -68,8 +78,10 @@ export function normalizeOsmPlace(
     neighborhood: area.id,
     arrondissement: arr,
     ...point,
-    shortDescription: labels[category],
-    editorialDescription: labels[category],
+    shortDescription: facts.length ? facts.join(" · ") : labels[category],
+    editorialDescription: facts.length
+      ? `${labels[category]} Informations déclarées : ${facts.join(", ")}.`
+      : labels[category],
     priceLevel: free ? 0 : null,
     tags: [
       ...(t.outdoor_seating === "yes" ? ["une terrasse"] : []),
@@ -85,12 +97,20 @@ export function normalizeOsmPlace(
     outdoor,
     weatherSuitability: indoor ? ["sun", "rain"] : ["sun"],
     walkingTime: 0,
-    address: t["addr:street"]
-      ? `${t["addr:housenumber"] ?? ""} ${t["addr:street"]}, Paris ${arr}e`.trim()
-      : `Paris ${arr}e · adresse précise non renseignée`,
+    address,
     image: "",
     source: "osm",
     sourceUrl: `https://www.openstreetmap.org/${e.type}/${e.id}`,
+    website: validWebsite,
+    googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${t.name} ${address}`)}`,
+    openingHours: t.opening_hours,
+    cuisine: t.cuisine?.replaceAll(";", " · "),
+    accessibility:
+      t.wheelchair === "yes"
+        ? "Accès fauteuil signalé"
+        : t.wheelchair === "limited"
+          ? "Accès fauteuil limité"
+          : undefined,
     updatedAt,
   };
 }

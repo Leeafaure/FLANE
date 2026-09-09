@@ -8,6 +8,7 @@ import {
   Footprints,
   CloudSun,
   CloudRain,
+  ExternalLink,
 } from "lucide-react";
 import { formatDistance } from "@/lib/format";
 import type { Place } from "@/types";
@@ -52,6 +53,28 @@ export function PlaceDetail({ place: p }: { place: Place }) {
             <MapPin size={18} />
             <span>{p.address}</span>
           </div>
+          {(p.website || p.googleMapsUrl) && (
+            <div className="detail-links">
+              {p.website && (
+                <a href={p.website} target="_blank" rel="noreferrer">
+                  Site du lieu <ExternalLink size={14} />
+                </a>
+              )}
+              {p.googleMapsUrl && (
+                <a href={p.googleMapsUrl} target="_blank" rel="noreferrer">
+                  Google Maps <ExternalLink size={14} />
+                </a>
+              )}
+            </div>
+          )}
+          {(p.openingHours || p.accessibility) && (
+            <div className="place-facts">
+              {p.openingHours && (
+                <span>Horaires signalés : {p.openingHours}</span>
+              )}
+              {p.accessibility && <span>{p.accessibility}</span>}
+            </div>
+          )}
           <div className="mood-chips">
             {p.tags.map((t) => (
               <span className="chip" key={t}>

@@ -1,9 +1,10 @@
 import { areas, neighborhoods } from "@/data/neighborhoods";
 import { anecdotes } from "@/data/anecdotes";
 import { streets } from "@/data/streets";
+import { places } from "@/data/places";
 import { distanceBetween } from "@/services/location";
 import { getRecommendations } from "@/services/recommendations";
-import type { Category, RecommendationInput } from "@/types";
+import type { Category, Place, RecommendationInput } from "@/types";
 export function parseRequest(text: string): Partial<RecommendationInput> & {
   rainy?: boolean;
   ambiance?: string;
@@ -95,13 +96,14 @@ export interface AssistantProvider {
   ask(
     text: string,
     context: RecommendationInput,
+    pool?: Place[],
   ): Promise<{
     message: string;
     places: ReturnType<typeof getRecommendations>;
   }>;
 }
 export const localAssistant: AssistantProvider = {
-  async ask(text, context) {
+  async ask(text, context, pool = places) {
     const intent = parseRequest(text);
     if (
       /raconte|histoire|anecdote/i.test(text) &&
@@ -119,22 +121,25 @@ export const localAssistant: AssistantProvider = {
         message: street
           ? `${street.name}. ${street.origin} ${street.lookUp}`
           : `${neighborhood.name}. ${neighborhood.history} ${story ? `Et le petit détail à raconter : ${story.text}` : ""}`,
-        places: getRecommendations({
-          ...context,
-          location: point,
-          neighborhood: street ? "batignolles" : neighborhood.id,
-          category: "curiosity",
-        }).slice(0, 3),
+        places: getRecommendations(
+          {
+            ...context,
+            location: point,
+            neighborhood: street ? "batignolles" : neighborhood.id,
+            category: "curiosity",
+          },
+          pool,
+        ).slice(0, 3),
       };
     }
     const weather = intent.rainy
       ? { ...context.weather, rain: true }
       : context.weather;
-    let results = getRecommendations({ ...context, ...intent, weather });
+    let results = getRecommendations({ ...context, ...intent, weather }, pool);
     if (intent.maxDistance !== undefined)
       results = results.filter((p) => p.distance <= intent.maxDistance!);
     if (intent.rainy) results = results.filter((p) => p.indoor);
-    const selected = results.slice(0, 3);
+    const selected = results.slice(0, 5);
     const message = selected.length
       ? `${intent.rainy ? "On reste au sec. " : ""}${intent.neighborhood ? "Pour ce quartier, " : "À ta place, "}je commencerais par ${selected[0].name}. ${intent.timeAvailable ? `J’ai gardé en tête tes ${intent.timeAvailable} minutes. ` : ""}Voici ${selected.length === 1 ? "une adresse qui devrait te plaire" : "quelques idées pour prendre ton temps"}.`
       : "Pas encore de pépite qui coche toutes ces envies dans notre petit carnet. Essaie un autre quartier ou un peu plus de temps.";

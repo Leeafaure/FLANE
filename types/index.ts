@@ -18,6 +18,11 @@ export type Place = Coordinates & {
   priceLevel: 0 | 1 | 2 | 3 | null;
   source?: "osm";
   sourceUrl?: string;
+  website?: string;
+  googleMapsUrl?: string;
+  openingHours?: string;
+  cuisine?: string;
+  accessibility?: string;
   updatedAt?: string;
   tags: string[];
   indoor: boolean;

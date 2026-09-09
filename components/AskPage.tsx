@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 import { useFlane } from "./AppProvider";
 import { PlaceCard } from "./PlaceCard";
 import { localAssistant } from "@/services/assistant";
-import { askOpenAI } from "@/services/ai";
+import { parseRequest } from "@/services/assistant";
+import { discoverPlaces } from "@/services/discovery";
 import type { RankedPlace } from "@/types";
 const suggestions = [
   "Un café cosy près de moi",
@@ -41,13 +42,17 @@ export function AskPage() {
     setBusy(true);
     try {
       const context = { location, weather };
-      let answer;
-      try {
-        answer = await askOpenAI(text, context);
-      } catch {
-        const local = await localAssistant.ask(text, context);
-        answer = { ...local, searched: false };
-      }
+      const intent = parseRequest(text);
+      const point = intent.location ?? location;
+      const nearby = await discoverPlaces(point);
+      const answer = {
+        ...(await localAssistant.ask(
+          text,
+          { ...context, location: point },
+          nearby.places,
+        )),
+        searched: false,
+      };
       setHistory((h) => [
         ...h,
         { id: crypto.randomUUID(), question: text.trim(), ...answer },
@@ -127,8 +132,8 @@ export function AskPage() {
           ))}
         </div>
         <p className="chat-help">
-          Quand la clé OpenAI est configurée, FLÂNE cherche et recoupe sur le
-          web. Sinon, le carnet local prend le relais.
+          Des recommandations locales, triées selon le quartier, la distance, la
+          météo, le temps disponible et les informations publiées par les lieux.
         </p>
         <div className="conversation" aria-live="polite" aria-busy={busy}>
           {history.map((exchange, i) => (

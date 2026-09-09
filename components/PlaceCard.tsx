@@ -1,7 +1,7 @@
 "use client";
 import { PlaceVisual } from "./PlaceVisual";
 import Link from "next/link";
-import { Heart, Footprints, ArrowUpRight, Plus } from "lucide-react";
+import { Heart, Footprints, ArrowUpRight, Plus, MapPinned } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useFlane } from "./AppProvider";
@@ -121,6 +121,17 @@ export function PlaceCard({
           </span>
           <CollectionButton place={place} />
         </div>
+        {place.googleMapsUrl && (
+          <a
+            className="place-external-link"
+            href={place.googleMapsUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <MapPinned size={14} />
+            Voir sur Google Maps
+          </a>
+        )}
       </div>
     </article>
   );
