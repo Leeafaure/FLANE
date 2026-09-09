@@ -77,11 +77,13 @@ export async function POST(request: NextRequest) {
       signal: AbortSignal.timeout(25000),
     });
     const payload = await response.json();
-    if (!response.ok)
-      return NextResponse.json(
-        { error: "FLÂNE ne peut pas répondre tout de suite." },
-        { status: response.status },
-      );
+    if (!response.ok) {
+      const error =
+        response.status === 429
+          ? "L’assistant a atteint la limite de l’API OpenAI. Vérifie le crédit et les limites du projet OpenAI."
+          : "FLÂNE ne peut pas répondre tout de suite.";
+      return NextResponse.json({ error }, { status: response.status });
+    }
     const message =
       typeof payload.output_text === "string"
         ? payload.output_text.trim()
