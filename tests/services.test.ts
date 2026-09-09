@@ -47,6 +47,11 @@ test("natural language recognizes time, budget, location and activity", () => {
   assert.equal(intent.budget, 1);
   assert.ok(intent.mood?.includes("cosy"));
 });
+test("natural language resolves a popular Paris landmark before searching", () => {
+  const intent = parseRequest("Qu’est-ce qu’on peut faire au Trocadéro ?");
+  assert.equal(intent.location?.longitude, 2.287);
+  assert.equal(intent.location?.latitude, 48.8635);
+});
 test("vintage in the Marais stays in the requested neighborhood", async () => {
   const answer = await localAssistant.ask("Du vintage dans le Marais", context);
   assert.ok(answer.places.length > 0);

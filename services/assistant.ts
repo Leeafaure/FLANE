@@ -4,6 +4,7 @@ import { streets } from "@/data/streets";
 import { places } from "@/data/places";
 import { distanceBetween } from "@/services/location";
 import { getRecommendations } from "@/services/recommendations";
+import { matchArea } from "@/services/areas";
 import type { Category, Place, RecommendationInput } from "@/types";
 export function parseRequest(text: string): Partial<RecommendationInput> & {
   rainy?: boolean;
@@ -16,6 +17,7 @@ export function parseRequest(text: string): Partial<RecommendationInput> & {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
   const place =
+    matchArea(text) ??
     areas.find((a) =>
       q.includes(
         a.name
